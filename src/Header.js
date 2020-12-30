@@ -1,15 +1,21 @@
 import React from "react";
-
 import SearchIcon from "@material-ui/icons/Search";
 import HomeIcon from "@material-ui/icons/Home";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import BusinessCenterIcon from "@material-ui/icons/BusinessCenter";
 import ChatIcon from "@material-ui/icons/Chat";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-
+import { logout } from "./features/userSlice";
 import "./Header.css";
 import HeaderOption from "./HeaderOption";
+import { auth } from "./firebase";
+import { useDispatch } from "react-redux";
 function Header() {
+  const dispatch = useDispatch();
+  const logoutApp = () => {
+    dispatch(logout());
+    auth.signOut();
+  };
   return (
     <div className="header">
       <div className="header__left">
@@ -19,7 +25,7 @@ function Header() {
         />
         <div className="header__search">
           <SearchIcon />
-          <input type="text" />
+          <input placeholder="Search" type="text" />
         </div>
       </div>
       <div className="header__right">
@@ -31,6 +37,7 @@ function Header() {
         <HeaderOption
           avatar="https://avatars0.githubusercontent.com/u/40870043?s=460&u=797867b3813b54bdfd7834ce301100fe9205b484&v=4"
           title="Me"
+          onClick={logoutApp}
         />
       </div>
     </div>
